@@ -1,25 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import LoginForm from "./Components/LoginForm/LoginForm";
+import Header from "./Layout/Header/Header";
 
-function App() {
+let showLoginContext = React.createContext(null);
+const App = () => {
+  const [showLogin, setShowLogin] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <showLoginContext.Provider value={(showLogin, setShowLogin)}>
+        <Header
+          isLoggedIn={isLoggedIn}
+          setIsLoggedIn={setIsLoggedIn}
+          showLogin={showLogin}
+          setShowLogin={setShowLogin}
+        />
+        {showLogin ? (
+          <LoginForm
+            isLoggedIn={isLoggedIn}
+            setIsLoggedIn={setIsLoggedIn}
+            showLogin={showLogin}
+            setShowLogin={setShowLogin}
+          />
+        ) : (
+          <div className="text-center p-5">
+            <h2>Please Click on Login button !</h2>
+          </div>
+        )}
+      </showLoginContext.Provider>
     </div>
   );
-}
+};
 
 export default App;
